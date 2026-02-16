@@ -40,9 +40,9 @@ def accel_read():
     AccY = AccY_raw / 16384.0
     AccZ = AccZ_raw / 16384.0
 
-    AccX_angle = atan(AccY) / (sqrt(pow(AccX, 2) + pow(AccZ, 2)) * 180 / pi)
+    AccX_angle = atan(AccY) / (sqrt(pow(AccX, 2) + pow(AccZ, 2)) * 180 / pi) - 0.51
 
-    AccY_angle = atan(-1 * AccX) / (sqrt(pow(AccY, 2) + pow(AccZ, 2)) * 180 / pi)
+    AccY_angle = atan(-1 * AccX) / (sqrt(pow(AccY, 2) + pow(AccZ, 2)) * 180 / pi) + 1.25
 
     return AccX_angle, AccY_angle
 
@@ -66,6 +66,11 @@ def gyro_read():
     GyroY = GyroY_raw / 131.0
     GyroZ = GyroZ_raw / 131.0
 
+    # +- bias/offset from gyro figures
+    GyroX = GyroX + 1.54
+    GyroY = GyroY - 1.40
+    GyroZ = GyroZ + 1.04
+
     GyroX_angle = GyroX_angle + GyroX * elapsed_time
     GyroY_angle = GyroY_angle + GyroY * elapsed_time 
 
@@ -81,6 +86,7 @@ def calculate_axis_motion(GyroZ, elapsed_time, GyroX_angle, AccX_angle, GyroY_an
     pitch = 0.96 * GyroY_angle + 0.04 * AccY_angle
 
     return(pitch, roll, yaw)
+
 
 def main():
     
