@@ -88,7 +88,9 @@ def main():
     GyroZ, GyroX_angle, GyroY_angle, elapsed_time = gyro_read()
     pitch, roll, yaw = calculate_axis_motion(GyroZ, elapsed_time, GyroX_angle, AccX_angle, GyroY_angle, AccY_angle)
 
-    print(f"Roll: {roll}, Pitch: {pitch}, Yaw: {yaw}")
+    print(f"Roll: {roll:.2f}, Pitch: {pitch:.2f}, Yaw: {yaw:.2f}")
 
 if __name__=="__main__":
-    main()
+    while True:
+        main()
+        time.sleep(0.1) # 10 readings per second
